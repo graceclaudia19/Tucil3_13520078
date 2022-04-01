@@ -1,5 +1,4 @@
-from shutil import move
-from turtle import position
+import time
 
 
 def kurang(m, el, iNow, jNow):
@@ -182,11 +181,7 @@ def BnB(m, depth, numNodes, matrixesBefore):
     tempM = copyMatrix(m)
     PuzzleToSolve, PuzzleCosts, Move = solve(tempM, matrixesBefore)
     position = ["up", "right","down","left"]
-    for pos in position:
-        if Move[0] != pos:
-            numNodes +=1
-        else:
-            break
+    numNodes+=len(Move)
     print("Move: "+str(Move[0])+"\nCost: "+str(PuzzleCosts[0])+"\nTotal nodes: "+str(numNodes))
     print("Depth: "+str(depth))
     displayMatrix(PuzzleToSolve[0])
@@ -198,47 +193,6 @@ def BnB(m, depth, numNodes, matrixesBefore):
         matrixesBefore.append(m)
         BnB(PuzzleToSolve[0], depth+1, numNodes, matrixesBefore)
 
-# def firstBnB(m):
-#     mBefore =[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-#     numNodes = 1
-#     depth = 1
-#     mUp = copyMatrix(m)
-#     mRight = copyMatrix(m)
-#     mDown = copyMatrix(m)
-#     mLeft = copyMatrix(m)
-
-#     puzzle = []
-#     moveUp(mUp)
-#     moveRight(mRight)
-#     moveDown(mDown)
-#     moveLeft(mLeft)
-
-#     puzzle.append(mUp)
-#     puzzle.append(mRight)
-#     puzzle.append(mDown)
-#     puzzle.append(mLeft)
-
-#     PuzzleToSolve, PuzzleCosts, Move = solve(mBefore,m)
-
-#     for i in range (len(puzzle)):
-#         if (isNotSame(puzzle[i], PuzzleToSolve[0])):
-#             numNodes +=1   
-#         else:
-#             break
-     
-#     print("Move: "+str(Move[0])+"\nCost: "+str(PuzzleCosts[0])+"\nTotal nodes: "+str(numNodes))
-#     displayMatrix(PuzzleToSolve[i])
-#     print()
-#     print()
-
-#     if PuzzleCosts[0] == 0:
-#         print("PUZZLE SOLVED!")
-#         print()
-#         print()
-#         print()
-#     else:
-#         BnB(m, PuzzleToSolve[0], depth+1, numNodes+1)
-    
 # check whether it can be solved or not,input matrix, return bool
 def reachableGoal(m):
     totLess = 0
@@ -261,8 +215,7 @@ def reachableGoal(m):
     else:
         return False
 
-# file = input("Enter file to read: ")
-file = "5.txt"
+file = input("Enter file to read: ")
 with open ('../test/'+file, 'r') as f:
     m = []
     for line in f.readlines():
@@ -277,5 +230,8 @@ with open ('../test/'+file, 'r') as f:
 
         displayMatrix(m)
         print()
+
+        start_time = time.time()
         BnB(m, 1, 1, [])
+        print("Program executed in %s seconds" % round((time.time() - start_time),5))
 
