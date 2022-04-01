@@ -14,69 +14,28 @@ def kurang(m,el, iNow, jNow):
     return less
 
 def numberOfTilesNotInPosition(m):
-    num = 0
+    cost = 0
+    ans = [["1","2","3","4"],
+           ["5","6","7","8"],
+           ["9","10","11","12"],
+           ["13","14","15",""]]
     for i in range (m):
         for j in range (m[0]):
-            if m[i][j] =="":
-                if (i!=3 or j!=3):
-                   num+=1
-            elif m[i][j] == "1":
-                if (i!=0 or j!=0):
-                    num+=1
-            elif m[i][j] == "2":
-                if (i!=1 or j!=0):
-                    num+=1
-            elif m[i][j] == "3":
-                if (i!=2 or j!=0):
-                    num+=1
-            elif m[i][j] == "4":
-                if (i!=3 or j!=0):
-                    num+=1
-            elif m[i][j] == "5":
-                if (i!=1 or j!=0):
-                    num+=1
-            elif m[i][j] == "6":
-                if (i!=1 or j!=1):
-                    num+=1
-            elif m[i][j] == "7":
-                if (i!=2 or j!=1):
-                    num+=1
-            elif m[i][j] == "8":
-                if (i!=3 or j!=1):
-                    num+=1
-            elif m[i][j] == "9":
-                if (i!=2 or j!=0):
-                    num+=1
-            elif m[i][j] == "10":
-                if (i!=2 or j!=1):
-                    num+=1
-            elif m[i][j] == "11":
-                if (i!=0 or j!=0):
-                    num+=1
-            elif m[i][j] == "12":
-                if (i!=1 or j!=0):
-                    num+=1
-            elif m[i][j] == "13":
-                if (i!=0 or j!=0):
-                    num+=1
-            elif m[i][j] == "14":
-                if (i!=1 or j!=0):
-                    num+=1
-            elif m[i][j] == "15":
-                if (i!=0 or j!=0):
-                    num+=1
-            else:
-                continue
+            if m[i][j]!=ans[i][j]:
+                cost+=1
+    return cost
                 
-def moveUp(m, i, j, el):
-    # i and j in current position
-    # STILL BROKEN
-    for i in range (len(m)):
-        for j in range (len(m[0])):
-            if m[i][j] == "":
-                m[i][j] = el
-                m[j][i] = ""
-                return m
+
+                
+# def moveUp(m, i, j, el):
+#     # i and j in current position
+#     # STILL BROKEN
+#     for i in range (len(m)):
+#         for j in range (len(m[0])):
+#             if m[i][j] == "":
+#                 m[i][j] = el
+#                 m[j][i] = ""
+#                 return m
 
 
 
