@@ -170,12 +170,13 @@ def displayInfo(step, node):
     # Penjelasan:
     # fungsi ini digunakan untuk mencetak info dari setiap pengiterasian yang digunakan ke layar
     if step != 0:
-        print("-- S T E P ",step,"--")
-        print("Cost  :", node.cost)
-        print("Level :", node.level)
-        print("Move  :", node.move)
+        print("---- S T E P ",step,"----")
     else:
         print("INITIAL PUZZLE STATE")
+    print("COST  :", node.cost)
+    print("LEVEL :", node.level)
+    if node.move!="initial position":
+        print("MOVE  :", node.move)
     displayMatrix(node.mat)
     print("\n")
 
@@ -223,7 +224,7 @@ def generateChildNode(parent, visitedNodes):
     # melakukan pergeseran ke bawah
     moveDown(mDown)
     # membuat node baru sesuai atribut pada kelas node
-    nodeDown = pq.node(parMatrix,mDown, cost(mDown), parent.level+1, "down")
+    nodeDown = pq.node(parent,mDown, cost(mDown), parent.level+1, "DOWN")
     # jika node yang baru dibuat tidak ada di list of visitedNodes, maka node akan ditambahkan ke list of nodes
     if isNotInListOfNodes(nodeDown, visitedNodes):
         generatedNodes.append(nodeDown)
@@ -234,7 +235,7 @@ def generateChildNode(parent, visitedNodes):
     # melakukan pergeseran ke atas
     moveUp(mUp)
     # membuat node baru sesuai atribut pada kelas node
-    nodeUp = pq.node(parMatrix,mUp, cost(mUp), parent.level +1, "up")
+    nodeUp = pq.node(parent,mUp, cost(mUp), parent.level +1, "UP")
     # jika node yang baru dibuat tidak ada di list of visitedNodes, maka node akan ditambahkan ke list of nodes
     if isNotInListOfNodes(nodeUp, visitedNodes):
         generatedNodes.append(nodeUp)
@@ -245,7 +246,7 @@ def generateChildNode(parent, visitedNodes):
     # melakukan pergeseran ke kanan
     moveRight(mRight)
     # membuat node baru sesuai atribut pada kelas node
-    nodeRight = pq.node(parMatrix,mRight, cost(mRight), parent.level+1, "right")
+    nodeRight = pq.node(parent,mRight, cost(mRight), parent.level+1, "RIGHT")
     # jika node yang baru dibuat tidak ada di list of visitedNodes, maka node akan ditambahkan ke list of nodes
     if isNotInListOfNodes(nodeRight, visitedNodes):
         generatedNodes.append(nodeRight)
@@ -256,13 +257,23 @@ def generateChildNode(parent, visitedNodes):
     # melakukan pergeseran ke kiri
     moveLeft(mLeft)
     # membuat node baru sesuai atribut pada kelas node
-    nodeLeft = pq.node(parMatrix,mLeft, cost(mLeft), parent.level+1, "left")
+    nodeLeft = pq.node(parent,mLeft, cost(mLeft), parent.level+1, "LEFT")
     # jika node yang baru dibuat tidak ada di list of visitedNodes, maka node akan ditambahkan ke list of nodes
     if isNotInListOfNodes(nodeLeft, visitedNodes):
         generatedNodes.append(nodeLeft)
 
     # mereturn nodes yang telah dibangkitkan 
     return generatedNodes
+
+def generatePath(node):
+    stack = []
+    while (node != None):
+        stack.append(node)
+        node = node.parent
+    step = 1
+    while (len(stack)!=0):
+        el = stack.pop()
+        displayInfo(step, el)
 
 def BnB(m):
     # Penjelasan:
@@ -292,14 +303,12 @@ def BnB(m):
         # menambahkan node yang sekarang akan dibangkitkan sebagai visited node
         visitedNodes.append(parent)
 
-        # mendisplay info untuk iterasi sekarang
-        displayInfo(step, parent)
-
         # jika cost = 0 maka sudah mencapai goal state
         if parent.cost == 0:
-            print("\n\( ﾟヮﾟ)/ -- YOUR PUZZLE IS SOLVED! -- ٩(◍╹∀╹◍)۶")
-            print("\nTotal Nodes Generated:", len(generatedNodes),"nodes")
-            return parent
+                print("\n\( ﾟヮﾟ)/ -- YOUR PUZZLE IS SOLVED! -- ٩(◍╹∀╹◍)۶")
+                print("\nTotal Nodes Generated:", len(generatedNodes),"nodes")
+                print("\nTotal Steps:", parent.level)
+                return parent
         else:
             # membangkitkan node child sesuai dengan parent
             childNodes = generateChildNode(parent, visitedNodes)
@@ -307,6 +316,3 @@ def BnB(m):
             for child in childNodes:
                 PQ.push(child)
                 generatedNodes.append(child)
-
-        # step akan bertambah satu tiap penelusuran pohon statusn
-        step += 1
