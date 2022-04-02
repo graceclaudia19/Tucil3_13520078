@@ -7,9 +7,26 @@ with open ('../test/'+file, 'r') as f:
     for line in f.readlines():
         m.append( [ int (x) for x in line.split(' ') ] )
     if(not functions.reachableGoal(m)):
-        print("Tidak dapat diselesaikan!")
+        print("\nYour Puzzle can't be Solved")
+        print("""
+  ──▄────▄▄▄▄▄▄▄────▄───
+  ─▀▀▄─▄█████████▄─▄▀▀──
+  ─────██─▀███▀─██──────
+  ───▄─▀████▀████▀─▄────
+  ─▀█────██▀█▀██────█▀──
+        """)
     else:
-        print("Dapat diselesaikan!")
+        print("\nYour Puzzle can be Solved! :) \n")
+        print("""
+ ───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───
+ ───█▒▒░░░░░░░░░▒▒█───
+ ────█░░█░░░░░█░░█────
+ ─▄▄──█░░░▀█▀░░░█──▄▄─
+ █░░█─▀▄░░░░░░░▄▀─█░░█
+
+
+        """)
+        
         rootCost = functions.cost(m)
         if rootCost==0:
             print("PUZZLE ALREADY SOLVED!")

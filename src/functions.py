@@ -72,16 +72,19 @@ def moveLeft(m):
                 found = True
 
 def displayMatrix(m):
-    for i in range (4):
-        print("|", end=" ")
-        for j in range (4):
-            if m[i][j]==16:
-                print("  ", end=" ")
-            elif m[i][j]>0 and m[i][j]<10:
-                print("0"+str(m[i][j]), end=" ")
-            else:
-                print(str(m[i][j]), end=" ")
-        print("|")   
+    print("╔════╤════╤════╤════╗")
+    for i in range(4):
+        print("║", end=" ")
+        for j in range(4):
+            el = m[i][j] 
+            line = "0"+ str(el) if el < 10 else str(el)
+            if el == 16: 
+                line = "  "
+            line = line + " │" if j != 3 else line + " ║"
+            print(line, end=" ")
+        if i != 3:
+            print("\n╟────┼────┼────┼────╢")
+    print("\n╚════╧════╧════╧════╝")    
 
 def copyMatrix(m):
     newM = []
@@ -118,39 +121,38 @@ def generateChildNode(parent, visitedNodes):
     # DOWN
     mDown = copyMatrix(parMatrix)
     moveDown(mDown)
-    nodeDown = pq.node(parMatrix,mDown, blankPosition(mDown), cost(mDown), parent.level+1, "down")
+    nodeDown = pq.node(parMatrix,mDown, cost(mDown), parent.level+1, "down")
     if isNotInListOfNodes(nodeDown, visitedNodes):
         generatedNodes.append(nodeDown)
     
     # UP
     mUp = copyMatrix(parMatrix)
     moveUp(mUp)
-    nodeUp = pq.node(parMatrix,mUp, blankPosition(mUp), cost(mUp), parent.level +1, "up")
+    nodeUp = pq.node(parMatrix,mUp, cost(mUp), parent.level +1, "up")
     if isNotInListOfNodes(nodeUp, visitedNodes):
         generatedNodes.append(nodeUp)
     
     # RIGHT
     mRight = copyMatrix(parMatrix)
     moveRight(mRight)
-    nodeRight = pq.node(parMatrix,mRight, blankPosition(mRight), cost(mRight), parent.level+1, "right")
+    nodeRight = pq.node(parMatrix,mRight, cost(mRight), parent.level+1, "right")
     if isNotInListOfNodes(nodeRight, visitedNodes):
         generatedNodes.append(nodeRight)
     
     # LEFT
     mLeft = copyMatrix(parMatrix)
     moveLeft(mLeft)
-    nodeLeft = pq.node(parMatrix,mLeft, blankPosition(mLeft), cost(mLeft), parent.level+1, "left")
+    nodeLeft = pq.node(parMatrix,mLeft, cost(mLeft), parent.level+1, "left")
     if isNotInListOfNodes(nodeLeft, visitedNodes):
         generatedNodes.append(nodeLeft)
 
     return generatedNodes
 
 def displayInfo(step, node):
-    print("----STEP",step,"----")
-    print("Cost:", node.cost)
-    print("Level:", node.level)
-    print("Move:", node.move)
-    print("Matrix:")
+    print("-- S T E P ",step,"--")
+    print("Cost  :", node.cost)
+    print("Level :", node.level)
+    print("Move  :", node.move)
     displayMatrix(node.mat)
     if node.cost!=0:
         print("\n")
@@ -158,11 +160,8 @@ def displayInfo(step, node):
 def BnB(m):
     PQ = pq.priorityQueue()
 
-    empty_tile_pos = blankPosition(m)
-    level = 0
-
-    parent = pq.node(None,m,empty_tile_pos, cost(m), level, "initial state")
-    visitedNodes = [parent] # jawaban jawaban path -> kalo udh divisit gaboleh divisit lg
+    parent = pq.node(None,m,cost(m), 0, "initial state")
+    visitedNodes = [parent]
     PQ.push(parent)
 
     step = 0
@@ -176,7 +175,7 @@ def BnB(m):
 
         # check if current node is goal
         if parent.cost == 0:
-            print("-- Solution Found --")
+            print("\n\( ﾟヮﾟ)/ -- YOUR PUZZLE IS SOLVED! -- ٩(◍╹∀╹◍)۶")
             break
         else:
             # generate child node
@@ -186,14 +185,46 @@ def BnB(m):
                 PQ.push(child)
         step += 1
 
+def displayKurangTable(kurangTable,x, totless):
+    print(" -------------------")
+    print("|  i   |  Kurang(i) |")
+    print(" -------------------")
+    for i in range(1,len(kurangTable)):
+        if i<10:
+            if kurangTable[i] < 10:
+                print("|  0"+str(i)+"  |    ", kurangTable[i], "     |")
+            else:
+                print("|  0"+str(i)+"  |    ", kurangTable[i], "    |")
+        else:
+            if kurangTable[i] < 10:
+                print("| ",i," |    ",kurangTable[i],"     |")
+            else:
+                print("| ",i," |    ",kurangTable[i],"    |")
+    print(" -------------------")
+    print("| ΣKurang(i)",str(totless),"    |")
+    print("| Nilai x = ",str(x) ,"     |")
+    print("| ΣKurang(i)+x =", str(totless + x), "|")
+    print(" -------------------")
+        
 
 
 # check whether it can be solved or not,input matrix, return bool
 def reachableGoal(m):
+    print("""
+ ██╗███████╗    ██████╗ ██╗   ██╗███████╗███████╗██╗     ███████╗    ███████╗ ██████╗ ██╗    ██╗   ██╗███████╗██████╗ 
+███║██╔════╝    ██╔══██╗██║   ██║╚══███╔╝╚══███╔╝██║     ██╔════╝    ██╔════╝██╔═══██╗██║    ██║   ██║██╔════╝██╔══██╗
+╚██║███████╗    ██████╔╝██║   ██║  ███╔╝   ███╔╝ ██║     █████╗      ███████╗██║   ██║██║    ██║   ██║█████╗  ██████╔╝
+ ██║╚════██║    ██╔═══╝ ██║   ██║ ███╔╝   ███╔╝  ██║     ██╔══╝      ╚════██║██║   ██║██║    ╚██╗ ██╔╝██╔══╝  ██╔══██╗
+ ██║███████║    ██║     ╚██████╔╝███████╗███████╗███████╗███████╗    ███████║╚██████╔╝███████╗╚████╔╝ ███████╗██║  ██║
+ ╚═╝╚══════╝    ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝ ╚═══╝  ╚══════╝╚═╝  ╚═╝                                                                                                     
+    """)
     totLess = 0
     # checking x
+    kurangTable = [0 for i in range (17)]
     for i in range(4):
         for j in range(4):
+            if (m[i][j]>16):
+                return False
             if (m[i][j]==16):
                 if ((i+j)%2==0):
                     x = 0
@@ -201,10 +232,8 @@ def reachableGoal(m):
                     x = 1
             less = kurang(m, m[i][j], i, j)
             totLess += less
-            print("KURANG("+str(m[i][j])+") =", less)
-    # print("SIGMA KURANG(i) =",totLess)
-    # print("X = ", x)
-    print("SIGMA KURANG(i) + X =", totLess+x)
+            kurangTable[m[i][j]-1] = less
+    displayKurangTable(kurangTable, x, totLess)
     if (x+totLess)%2==0:
         return True
     else:

@@ -27,7 +27,7 @@ class priorityQueue:
     
 class node:
      
-    def __init__(self, parent, mat, empty_tile_pos,
+    def __init__(self, parent, mat,
                  cost, level, move):
                       
         # Stores the parent node of the
@@ -37,10 +37,6 @@ class node:
  
         # Stores the matrix
         self.mat = mat
- 
-        # Stores the position at which the
-        # empty space tile exists in the matrix
-        self.empty_tile_pos = empty_tile_pos
  
         # Storesthe number of misplaced tiles
         self.cost = cost
