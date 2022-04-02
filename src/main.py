@@ -96,7 +96,9 @@ Solving… please wait
             start_time = time.time()
             # pemanfaatan algoritma branch and bound untuk pencarian solusi
             nodeSolution = functions.BnB(m)
+            # durasi berjalannya program BnB
             duration = (time.time() - start_time)
+            # menampilkan semua nodes solusi ke layar
             displaySolution(nodeSolution)
             print("Program executed in %s seconds" % round(duration,5))
 

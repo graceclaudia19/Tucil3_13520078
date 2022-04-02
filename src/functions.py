@@ -265,20 +265,10 @@ def generateChildNode(parent, visitedNodes):
     # mereturn nodes yang telah dibangkitkan 
     return generatedNodes
 
-def generatePath(node):
-    stack = []
-    while (node != None):
-        stack.append(node)
-        node = node.parent
-    step = 1
-    while (len(stack)!=0):
-        el = stack.pop()
-        displayInfo(step, el)
-
 def BnB(m):
     # Penjelasan:
     # Fungsi ini dilakukan untuk menyelesaikan persoalan 15 puzzle dengan algoritma branch and bound
-    # Fungsi akan berhenti saat dalam keadaan goal state
+    # Fungsi akan berhenti saat dalam keadaan goal state dan mengembalikan node solusi
 
     # menginisialisasikan priority queue
     PQ = pq.priorityQueue()
