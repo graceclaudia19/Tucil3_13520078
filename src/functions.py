@@ -160,7 +160,7 @@ def displayInfo(step, node):
 def BnB(m):
     PQ = pq.priorityQueue()
 
-    parent = pq.node(None,m,cost(m), 0, "initial state")
+    parent = pq.node(None,m,cost(m), 0, "initial position")
     visitedNodes = [parent]
     PQ.push(parent)
 
@@ -189,22 +189,24 @@ def displayKurangTable(kurangTable,x, totless):
     print(" -------------------")
     print("|  i   |  Kurang(i) |")
     print(" -------------------")
-    for i in range(1,len(kurangTable)):
-        if i<10:
-            if kurangTable[i] < 10:
-                print("|  0"+str(i)+"  |    ", kurangTable[i], "     |")
-            else:
-                print("|  0"+str(i)+"  |    ", kurangTable[i], "    |")
+    for i in range(len(kurangTable)):
+        if i == 0:
+            continue
         else:
-            if kurangTable[i] < 10:
-                print("| ",i," |    ",kurangTable[i],"     |")
+            if i<10:
+                if kurangTable[i] < 10:
+                    print("|  0"+str(i)+"  |    ", kurangTable[i], "     |")
+                else:
+                    print("|  0"+str(i)+"  |    ", kurangTable[i], "    |")
             else:
-                print("| ",i," |    ",kurangTable[i],"    |")
+                if kurangTable[i] < 10:
+                    print("| ",i," |    ",kurangTable[i],"     |")
+                else:
+                    print("| ",i," |    ",kurangTable[i],"    |")
     print(" -------------------")
-    print("| ΣKurang(i)",str(totless),"    |")
-    print("| Nilai x = ",str(x) ,"     |")
-    print("| ΣKurang(i)+x =", str(totless + x), "|")
-    print(" -------------------")
+    print("\nΣ Kurang(i)     =",str(totless))
+    print("Nilai x         =",str(x))
+    print("Σ Kurang(i) + x =", str(totless + x))
         
 
 
@@ -232,7 +234,7 @@ def reachableGoal(m):
                     x = 1
             less = kurang(m, m[i][j], i, j)
             totLess += less
-            kurangTable[m[i][j]-1] = less
+            kurangTable[m[i][j]] = less
     displayKurangTable(kurangTable, x, totLess)
     if (x+totLess)%2==0:
         return True
