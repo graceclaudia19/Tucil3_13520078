@@ -13,7 +13,7 @@ Algoritma penyelesaian yang digunakan dalam pemecahan persoalan 15-puzzle merupa
 
 Setelah clone repository ini, cara menjalankannya adalah:
 
-1. cd src
+1. cd Tucil3_13520078/src
 2. python main.py
 3. Memilih diantara membaca file .txt atau manual input, untuk membaca file .txt, pastikan file berada pada folder test
 4. Untuk pilihan masukan pembacaan file, input nama file dengan format .txt yang benar, sedangkan untuk manual input maka akan melakukan manual input satu persatu elemen matrix
