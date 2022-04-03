@@ -32,7 +32,6 @@ def displaySolution(node):
     for i in range(len(solutions)):
         solution = solutions.pop()
         functions.displayInfo(i,solution)
-        time.sleep(1)
 
 
 print("""
@@ -47,7 +46,7 @@ print("""
 ╚██║███████╗█████╗██████╔╝██║   ██║  ███╔╝   ███╔╝ ██║     █████╗      ███████╗██║   ██║██║    ██║   ██║█████╗  ██████╔╝
  ██║╚════██║╚════╝██╔═══╝ ██║   ██║ ███╔╝   ███╔╝  ██║     ██╔══╝      ╚════██║██║   ██║██║    ╚██╗ ██╔╝██╔══╝  ██╔══██╗
  ██║███████║      ██║     ╚██████╔╝███████╗███████╗███████╗███████╗    ███████║╚██████╔╝███████╗╚████╔╝ ███████╗██║  ██║
- ╚═╝╚══════╝      ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝ ╚═══╝  ╚══════╝╚═╝  ╚═╝                                                                                                                                                                                                                                       
+ ╚═╝╚══════╝      ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝ ╚═══╝  ╚══════╝╚═╝  ╚═╝                                                                                                                                  
 """)
 
 x = int(input("MAIN MENU \n1. Read .txt file \n2. Manual Input\nYour Choice: "))
@@ -85,12 +84,13 @@ else:
 ⠀⠀⠀⠀☆ * (つ ノ .☆
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀(ノ
 Solving… please wait
-████████▒▒▒▒▒▒▒▒▒▒▒▒
+████████████▒▒▒▒▒▒▒
         """)
         rootCost = functions.cost(m)
         # apabila initial state puzzle sudah berupa susunan solusi maka tidak perlu menjalankan pencarian solusi
         if rootCost==0:
-            print("PUZZLE ALREADY SOLVED!")
+            print("THE ORIGINAL PUZZLE IS THE SOLUTION!")
+            functions.displayMatrix(m)
         else:
             start_time = time.time()
             # pemanfaatan algoritma branch and bound untuk pencarian solusi
@@ -99,6 +99,6 @@ Solving… please wait
             duration = (time.time() - start_time)
             # menampilkan semua nodes solusi ke layar
             displaySolution(nodeSolution)
-            print("Program executed in %s seconds" % round(duration,5))
+            print("Program algorithm executed in %s seconds" % round(duration,5))
 
 

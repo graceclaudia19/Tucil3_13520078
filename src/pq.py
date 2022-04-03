@@ -1,24 +1,21 @@
 from heapq import heappush, heappop
 
-from numpy import mat
-# A class for Priority Queue
+
+# kelas untuk priority queue
 class priorityQueue:
-     
-    # Constructor to initialize a
-    # Priority Queue
+    #konstruktor
     def __init__(self):
         self.heap = []
  
-    # Inserts a new key 'k'
+    # push pada priority queue
     def push(self, k):
         heappush(self.heap, k)
  
-    # Method to remove minimum element
-    # from Priority Queue
+    # pop pada priority queue
     def pop(self):
         return heappop(self.heap)
  
-    # Method to know if the Queue is empty
+    # mengecek apakah priority queue empty atau tidak
     def isEmpty(self):
         if not self.heap:
             return True
@@ -26,26 +23,26 @@ class priorityQueue:
             return False
     
 class node:
-     
+    # konstruktor
     def __init__(self, parent, mat,
                  cost, level, move):
                       
-        # Stores the parent node of the
-        # current node helps in tracing
-        # path when the answer is found
+        #m enyimpan parent node
         self.parent = parent
  
-        # Stores the matrix
+        # menyimpan matrix
         self.mat = mat
  
-        # Storesthe number of misplaced tiles
+        # minyimpan cost (ubin yang tidak sesuai tempatnya)
         self.cost = cost
  
-        # Stores the number of moves so far
+        # menyimpan depth/level/kedalaman
         self.level =level
 
+        # menyimoan move
         self.move = move
         
+    # pemanfaatan loading 
     def __lt__(self, next):
         if (self.cost + self.level == next.cost + next.level):
             return self.cost < next.cost

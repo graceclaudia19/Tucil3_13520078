@@ -296,8 +296,9 @@ def BnB(m):
         # jika cost = 0 maka sudah mencapai goal state
         if parent.cost == 0:
                 print("\n\( ﾟヮﾟ)/ -- YOUR PUZZLE IS SOLVED! -- ٩(◍╹∀╹◍)۶")
-                print("\nTotal Nodes Generated:", len(generatedNodes),"nodes")
-                print("\nTotal Steps:", parent.level)
+                print("Total Generated Nodes:", len(generatedNodes),"nodes")
+                print("Total Visited Nodes:", len(visitedNodes),"nodes")
+                print("Total Steps:", parent.level)
                 return parent
         else:
             # membangkitkan node child sesuai dengan parent
