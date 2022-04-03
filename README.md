@@ -6,8 +6,7 @@
 
 Algoritma penyelesaian yang digunakan dalam pemecahan persoalan 15-puzzle merupakan algoritma branch and bound. Algoritma branch and bound biasanya digunakan untuk persoalan optimasi dimana algoritma ini akan meminimalkan atau memaksimalkan suatu fungsi objektif yang tidak melanggar batasan persoalan. Algoritma ini memiliki fungsi pembatas untuk melakukan pemangkasan pada jalur yang dianggap tidak lagi mengarah ke solusi.
 
-## Requiremens
-
+## Requirements
 1. [Python 3](https://www.python.org/downloads/)
 
 ## Running Program
